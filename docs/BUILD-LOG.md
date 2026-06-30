@@ -130,8 +130,67 @@ remains. Newest stage at the bottom.
   MFA + billing entry.
 - Typecheck **clean** after each stage.
 
-**Remains**
+## Stage 9 — Death-claim intake + admin review + release + audit ✅
 
-- Stages 6–12 (partner sharing, nominees/director UI, nudges, billing,
-  death-claim + admin + release, recipient experience, marketing/integration,
-  remaining docs).
+See commit "Stages 9 & 10". Public claim intake (service role, sees no vault
+data); admin review queue with signed-URL document viewer, GATED manual
+corroboration, authority confirmation, approve&release / reject with mandatory
+immutable notes; release engine enforcing tier rules with 3 passing tests.
+
+## Stage 10 — Recipient experience + posthumous messages ✅
+
+Token-gated `/access` page (re-encrypted grants, time-limited, audited).
+`posthumous_messages` table modelled opt-in/recipient-bound; release delivers a
+secure link, never content.
+
+## Stage 6 — Living journeys (people, partner sharing) ✅
+
+Nominees + funeral director + prominent partner sharing (re-encryption shares).
+
+## Stage 7 — Anti-rot nudges ✅
+
+`app/api/cron/nudges` (CRON_SECRET-protected, daily via vercel.json) + Deno
+`nudge-scheduler` Edge Function; `markSectionReviewed` action + "last reviewed".
+
+## Stage 8 — Stripe billing ✅
+
+`lib/stripe`, checkout + customer portal actions, signature-verified webhook
+mapping subscription status → `profiles.plan`, billing page with consumer-law
+auto-renew disclosure copy. Free tier vs A$99/yr.
+
+## Stage 11 — Marketing + Gaia integration hand-off ✅
+
+Marketing landing (Stage 1) + `/security`; `docs/GAIA-INTEGRATION.md` with the
+Products-dropdown snippet, shared brand tokens, and the gated CRM-sync path.
+
+## Stage 12 — Docs ✅
+
+`SECURITY.md`, `LEGAL-GATES.md`, `DATA-RESIDENCY.md`, `ADMIN-RUNBOOK.md`,
+`GAIA-INTEGRATION.md`, `README.md`, this build log.
+
+## Gated capabilities (visibly disabled, never faked) ✅
+
+`lib/flags.ts`; credentials page renders "pending security review" (no fake
+form; no DB insert policy); `lib/integrations/crm.ts` throws while
+`FEATURE_CRM_SYNC=false`; corroboration panel is manual-only.
+
+## Edge Functions (production isolation) ✅
+
+`supabase/functions/release` and `nudge-scheduler` (Deno mirrors) + shared Deno
+crypto, with KMS hardening notes.
+
+---
+
+### Verification status
+
+- `tsc --noEmit` (strict) **clean**; `vitest` **9/9 green** (crypto + release).
+- Not run in this environment: `next build` and a live Supabase deploy (no
+  project/secrets here). Run `bash scripts/setup.sh` + `supabase db push`.
+
+### Known follow-ups before production
+
+- Production KMS/Vault for keys (SECURITY.md gate 5); complete the
+  `LEGAL-GATES.md` sign-offs; wire the admin approval to invoke the release
+  **Edge Function** instead of the in-process server action once KMS is in place;
+  partner-share "accept" UX + a "Shared with me" page; posthumous-message
+  composer UI; RLS integration tests against a live database.

@@ -116,6 +116,22 @@ export async function createItem(formData: FormData): Promise<SaveResult> {
   return { ok: true, id: item.id };
 }
 
+/** Anti-rot: stamp a section as reviewed today. */
+export async function markSectionReviewed(section: SectionType): Promise<void> {
+  const user = await requireUser();
+  const db = await getDb();
+  const vaultId = await ownerVaultId(user.id);
+  await db.stampSectionReviewed(vaultId, section);
+  await db.audit({
+    actorId: user.id,
+    actorRole: "user",
+    action: "vault_section.reviewed",
+    entityType: "section",
+    metadata: { section },
+  });
+  revalidatePath(`/vault/${section}`);
+}
+
 export async function deleteItem(itemId: string, section: SectionType): Promise<void> {
   const user = await requireUser();
   const db = await getDb();
