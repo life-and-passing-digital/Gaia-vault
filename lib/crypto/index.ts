@@ -188,3 +188,60 @@ export async function openItemViaEscrow(envelope: EncryptedEnvelope): Promise<st
   const pt = await aesDecrypt(dek, envelope.iv, envelope.ciphertext);
   return textDecoder.decode(pt);
 }
+
+// ── Recipient grants ────────────────────────────────────────────────────────
+// After release, content is re-encrypted under a key derived from a one-time
+// access token that we email to the recipient. The stored row is NOT sufficient
+// to read the content without the token, and the token is never stored (only its
+// hash). This gives recipients time-limited access to exactly their entitlement.
+
+/** A URL-safe one-time access token (256-bit). */
+export function randomToken(): string {
+  return Buffer.from(randomKey()).toString("base64url");
+}
+
+/** Lookup hash for a token. The raw token is never persisted. */
+export async function hashToken(token: string): Promise<string> {
+  const digest = await subtle.digest("SHA-256", src(textEncoder.encode(token)));
+  return Buffer.from(new Uint8Array(digest)).toString("hex");
+}
+
+async function deriveTokenKey(token: string): Promise<Uint8Array> {
+  const base = await subtle.importKey(
+    "raw",
+    src(textEncoder.encode(token)),
+    "HKDF",
+    false,
+    ["deriveBits"],
+  );
+  const bits = await subtle.deriveBits(
+    {
+      name: "HKDF",
+      hash: "SHA-256",
+      salt: src(textEncoder.encode("gaia-vault:grant")),
+      info: src(textEncoder.encode("recipient-access:v1")),
+    },
+    base,
+    KEY_BYTES * 8,
+  );
+  return new Uint8Array(bits);
+}
+
+/** Re-encrypt released plaintext for a recipient, bound to their token. */
+export async function sealForRecipient(
+  plaintext: string,
+  token: string,
+): Promise<{ iv: string; ciphertext: string }> {
+  const key = await deriveTokenKey(token);
+  return aesEncrypt(key, textEncoder.encode(plaintext));
+}
+
+/** Recipient decrypts their grant with the token from their secure link. */
+export async function openForRecipient(
+  envelope: { iv: string; ciphertext: string },
+  token: string,
+): Promise<string> {
+  const key = await deriveTokenKey(token);
+  const pt = await aesDecrypt(key, envelope.iv, envelope.ciphertext);
+  return textDecoder.decode(pt);
+}
