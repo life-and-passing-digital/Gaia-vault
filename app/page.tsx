@@ -10,10 +10,12 @@ export default function HomePage() {
     <main>
       {/* ── Header ─────────────────────────────────────────────────────── */}
       <header className="px-5 py-5">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <Logo />
-          <nav className="flex items-center gap-2">
-            <Link href="/security">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
+          <Link href="/" className="shrink-0">
+            <Logo />
+          </Link>
+          <nav className="flex items-center gap-1 sm:gap-2">
+            <Link href="/security" className="hidden sm:block">
               <Button variant="ghost" size="sm">
                 How it works
               </Button>
@@ -41,13 +43,13 @@ export default function HomePage() {
           </h1>
           <p className="mt-5 text-lg text-ink-500 leading-relaxed">
             Gather your wishes, your important people, documents and a few words
-            you’d want remembered — gently, in one calm place. Share what you
+            you’d want remembered, gently, in one calm place. Share what you
             choose with those close to you today, and rest knowing the rest is
             cared for.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <Link href="/signup">
-              <Button size="lg">Start your vault — free</Button>
+              <Button size="lg">Start your vault, free</Button>
             </Link>
             <Link href="/security">
               <Button size="lg" variant="secondary">
@@ -67,7 +69,7 @@ export default function HomePage() {
           <Card>
             <CardTitle>Start with the easy things</CardTitle>
             <CardDescription className="mt-2">
-              Begin with your wishes — the lowest-stress place to start. Add
+              Begin with your wishes, the lowest-stress place to start. Add
               people, documents and messages whenever you’re ready.
             </CardDescription>
           </Card>
@@ -75,7 +77,7 @@ export default function HomePage() {
             <CardTitle>Share while you’re here</CardTitle>
             <CardDescription className="mt-2">
               Invite a partner to co-view what you choose, today. Not a someday
-              thing — a useful, shared place right now.
+              thing, but a useful, shared place right now.
             </CardDescription>
           </Card>
           <Card>
@@ -93,7 +95,7 @@ export default function HomePage() {
         <Card className="bg-forest-800 border-forest-700 text-canvas-100">
           <Eyebrow className="text-sage-300">For families</Eyebrow>
           <h2 className="mt-2 text-2xl sm:text-3xl font-display text-canvas-50">
-            Part of the Gaia family — alongside Gaia CRM, Gaia App, Funerals Live
+            Part of the Gaia family, alongside Gaia CRM, Gaia App, Funerals Live
             and Moments by Gaia.
           </h2>
           <p className="mt-3 max-w-2xl text-canvas-200">
@@ -132,7 +134,7 @@ export default function HomePage() {
         </div>
         <p className="mx-auto mt-6 max-w-6xl text-xs text-ink-400">
           Gaia Vault encrypts your information at rest. The “release set” you
-          designate for after death is not zero-knowledge — we’re transparent
+          designate for after death is not zero-knowledge. We’re transparent
           about exactly what that means on our{" "}
           <Link href="/security" className="underline">
             security page

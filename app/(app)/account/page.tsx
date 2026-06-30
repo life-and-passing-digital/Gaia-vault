@@ -24,7 +24,7 @@ export default async function AccountPage() {
         <CardTitle>Your details</CardTitle>
         <dl className="mt-4 grid grid-cols-[8rem_1fr] gap-y-2 text-sm">
           <dt className="text-ink-400">Name</dt>
-          <dd className="text-ink-800">{profile?.fullName ?? "—"}</dd>
+          <dd className="text-ink-800">{profile?.fullName ?? "Not set"}</dd>
           <dt className="text-ink-400">Email</dt>
           <dd className="text-ink-800">{profile?.email}</dd>
           <dt className="text-ink-400">Plan</dt>

@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
       subject: "A gentle nudge from Gaia Vault",
       text:
         `Hello${profile.full_name ? ` ${profile.full_name.split(" ")[0]}` : ""},\n\n` +
-        `It’s been a little while. Life changes — a move, a new arrival, a ` +
+        `It’s been a little while. Life changes, a move, a new arrival, a ` +
         `change of heart. When you have a quiet moment, it’s worth a look to ` +
         `make sure everything still feels right.\n\n` +
         `${appUrl()}/dashboard\n\nNo rush, and nothing to worry about.\n\n` +

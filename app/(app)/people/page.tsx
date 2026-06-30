@@ -22,7 +22,7 @@ export default async function PeoplePage() {
       <div>
         <h1 className="text-3xl font-display text-forest-800">People</h1>
         <p className="mt-1 text-ink-500">
-          The people who matter — to share with now, or to care for later.
+          The people who matter, to share with now, or to care for later.
         </p>
       </div>
       <PeopleManager

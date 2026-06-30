@@ -23,7 +23,7 @@ export default async function BillingPage({
 
       {status === "success" && (
         <p className="rounded-2xl bg-sage-100 px-4 py-3 text-sm text-forest-800">
-          Thank you — your plan is active. We’ll keep your vault safe.
+          Thank you. Your plan is active, and we’ll keep your vault safe.
         </p>
       )}
 
@@ -53,7 +53,7 @@ export default async function BillingPage({
         ) : (
           <>
             <CardDescription className="mt-3">
-              You’re on the free tier — enough to begin. Upgrade to Gaia Vault
+              You’re on the free tier, enough to begin. Upgrade to Gaia Vault
               Plus for the full vault, partner sharing and posthumous messages.
             </CardDescription>
             <div className="mt-4 rounded-2xl bg-canvas-200 p-4">

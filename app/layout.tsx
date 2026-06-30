@@ -20,11 +20,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Gaia Vault — Organise what matters, for the people you trust",
+    default: "Gaia Vault · Organise what matters, for the people you trust",
     template: "%s · Gaia Vault",
   },
   description:
-    "Gaia Vault helps you gently organise your wishes, people, documents and messages — and share them, with care, with the people you trust.",
+    "Gaia Vault helps you gently organise your wishes, people, documents and messages, and share them, with care, with the people you trust.",
   applicationName: "Gaia Vault",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL ?? "https://vault.gaiaapp.net",

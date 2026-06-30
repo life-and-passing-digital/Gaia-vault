@@ -31,7 +31,7 @@ export function PeopleManager({
       <Card className="border-forest-200 bg-sage-50/50">
         <CardTitle>Share with your partner, today</CardTitle>
         <CardDescription className="mt-1 mb-4">
-          Invite someone you trust to co-view the things you choose — now, while
+          Invite someone you trust to co-view the things you choose, now, while
           you’re here. Not a someday thing; a useful, shared place.
         </CardDescription>
         <form action={(fd) => start(() => invitePartner(fd).then(() => {}))} className="flex gap-2">
@@ -42,7 +42,7 @@ export function PeopleManager({
           <ul className="mt-3 space-y-1 text-sm text-ink-500">
             {invites.map((i) => (
               <li key={i.partner_email}>
-                {i.partner_email} — <span className="capitalize">{i.status}</span>
+                {i.partner_email}: <span className="capitalize">{i.status}</span>
               </li>
             ))}
           </ul>

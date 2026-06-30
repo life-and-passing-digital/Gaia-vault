@@ -26,7 +26,7 @@ export default async function CredentialsPage() {
         </div>
         <CardDescription className="mt-3">
           We’re building a careful, secure way to store the credentials that
-          matter — but we won’t turn it on until it has passed an independent
+          matter, but we won’t turn it on until it has passed an independent
           security review and the right legal sign-offs. We’d rather wait than
           get this wrong.
         </CardDescription>

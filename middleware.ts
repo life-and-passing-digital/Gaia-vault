@@ -14,10 +14,21 @@ const PROTECTED_PREFIXES = ["/dashboard", "/vault", "/people", "/account", "/adm
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // If Supabase isn't configured (e.g. a fresh deploy with no env vars yet),
+  // never throw — that would 500 EVERY route via MIDDLEWARE_INVOCATION_FAILED.
+  // Let public pages render; protected pages are still guarded server-side by
+  // requireUser(), which redirects to /login.
+  if (!supabaseUrl || !supabaseKey) {
+    return response;
+  }
+
+  const path = request.nextUrl.pathname;
+
+  try {
+    const supabase = createServerClient(supabaseUrl, supabaseKey, {
       cookies: {
         getAll: () => request.cookies.getAll(),
         setAll: (
@@ -30,20 +41,23 @@ export async function middleware(request: NextRequest) {
           );
         },
       },
-    },
-  );
+    });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  const path = request.nextUrl.pathname;
-  const needsAuth = PROTECTED_PREFIXES.some((p) => path.startsWith(p));
-  if (needsAuth && !user) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    url.searchParams.set("next", path);
-    return NextResponse.redirect(url);
+    const needsAuth = PROTECTED_PREFIXES.some((p) => path.startsWith(p));
+    if (needsAuth && !user) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      url.searchParams.set("next", path);
+      return NextResponse.redirect(url);
+    }
+  } catch (error) {
+    // Auth refresh failed (network/config). Don't take the whole site down;
+    // protected routes remain guarded by requireUser() at the page layer.
+    console.error("middleware: auth refresh failed", error);
   }
 
   return response;

@@ -73,7 +73,7 @@ export function ClaimReview({ claim }: { claim: DeathClaim }) {
       <Card>
         <CardTitle>Corroboration</CardTitle>
         <CardDescription className="mt-1 mb-3">
-          Manual entry only. There are no live death-database integrations — these
+          Manual entry only. There are no live death-database integrations; these
           notes inform your judgement and never trigger a release.
         </CardDescription>
         <Textarea
@@ -91,7 +91,7 @@ export function ClaimReview({ claim }: { claim: DeathClaim }) {
         <CardTitle>Estate authority</CardTitle>
         <CardDescription className="mt-1 mb-3">
           {claim.authorityConfirmed
-            ? "Confirmed — estate-tier items will be included on approval."
+            ? "Confirmed. Estate-tier items will be included on approval."
             : "Not confirmed. Estate/financial items will be held back until you confirm proof of legal authority."}
         </CardDescription>
         {!claim.authorityConfirmed && (

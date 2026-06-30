@@ -39,7 +39,7 @@ export default async function SectionPage({
 
       {items.length === 0 ? (
         <EmptyState
-          title={`Nothing here yet — that’s okay`}
+          title={`Nothing here yet, and that’s okay`}
           description={meta.blurb}
           action={<ItemEditor section={sectionType} />}
         />

@@ -40,7 +40,7 @@ export function Logo({
         />
       </svg>
       {showWord && (
-        <span className="font-display text-[1.35rem] leading-none text-forest-800">
+        <span className="whitespace-nowrap font-display text-[1.35rem] leading-none text-forest-800">
           Gaia <span className="text-forest-600">Vault</span>
         </span>
       )}

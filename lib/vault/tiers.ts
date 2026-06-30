@@ -23,7 +23,7 @@ export const RELEASE_TIERS = {
     short: "Funeral",
     tone: "flame",
     description:
-      "Released quickly to your authorised funeral director once a death claim is reviewed and approved — so your wishes can be honoured in time.",
+      "Released quickly to your authorised funeral director once a death claim is reviewed and approved, so your wishes can be honoured in time.",
   },
   estate_authority: {
     id: "estate_authority",

@@ -16,7 +16,7 @@ export default async function LoginPage({
       </p>
       {params["check-email"] && (
         <p className="mb-5 rounded-2xl bg-sage-100 px-4 py-3 text-sm text-forest-800">
-          Almost there — check your email to confirm your account, then sign in.
+          Almost there. Check your email to confirm your account, then sign in.
         </p>
       )}
       <SignInForm />

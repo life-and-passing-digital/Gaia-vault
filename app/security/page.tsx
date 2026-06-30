@@ -31,7 +31,7 @@ export default function SecurityPage() {
         </h1>
         <p className="mt-4 text-lg text-ink-600 leading-relaxed">
           You’re trusting us with some of the most personal information you have.
-          Here’s exactly how we protect it — and, just as importantly, what we
+          Here’s exactly how we protect it, and just as importantly, what we
           can and can’t do. We’d rather be honest than impressive.
         </p>
         <div className="mt-5">
@@ -43,7 +43,7 @@ export default function SecurityPage() {
             <CardTitle>Your information is encrypted</CardTitle>
             <CardDescription className="mt-2">
               Everything you save is encrypted (AES-256-GCM) before it’s stored.
-              In everyday use, only you can see your vault — protected by your
+              In everyday use, only you can see your vault, protected by your
               login, optional two-step verification, and strict access rules in
               our database.
             </CardDescription>
@@ -53,7 +53,7 @@ export default function SecurityPage() {
             <CardTitle>We’re honest: this isn’t “zero-knowledge”</CardTitle>
             <CardDescription className="mt-2">
               Some services claim they can <em>never</em> see your data. We don’t
-              make that claim, because it wouldn’t be true here — and being able
+              make that claim, because it wouldn’t be true here, and being able
               to release your wishes after you’re gone depends on it. Information
               you mark for release after death is encrypted in a way that an
               approved, human-reviewed process can unlock for the right person.
@@ -84,7 +84,7 @@ export default function SecurityPage() {
               </li>
               <li>
                 <strong>4.</strong> The people you chose receive secure,
-                time-limited access to exactly what you left them — and nothing
+                time-limited access to exactly what you left them, and nothing
                 else. Every release is logged permanently.
               </li>
             </ol>
@@ -103,7 +103,7 @@ export default function SecurityPage() {
           <Card>
             <CardTitle>Audit & transparency</CardTitle>
             <CardDescription className="mt-2">
-              We keep a permanent, tamper-evident log of sensitive actions — who
+              We keep a permanent, tamper-evident log of sensitive actions: who
               accessed what, and every release. We log <em>actions</em>, never
               the contents of your vault.
             </CardDescription>

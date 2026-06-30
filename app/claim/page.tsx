@@ -24,8 +24,8 @@ export default function ClaimPage() {
         </h1>
         <p className="mt-3 text-ink-600 leading-relaxed">
           If someone close to you used Gaia Vault, you can let us know here.
-          You won’t be able to see any of their information — and neither can
-          anyone else — until a member of our team has carefully reviewed your
+          You won’t be able to see any of their information, and neither can
+          anyone else, until a member of our team has carefully reviewed your
           notification and the documents you provide. Take your time.
         </p>
         <div className="my-8 rounded-card border border-sage-200 bg-sage-50 p-4 text-sm text-forest-800">

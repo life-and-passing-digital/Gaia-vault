@@ -99,7 +99,7 @@ export async function invitePartner(formData: FormData): Promise<{ error?: strin
     subject: "You’ve been invited to share a Gaia Vault",
     text:
       `Hello,\n\nSomeone close to you would like to share part of their Gaia ` +
-      `Vault with you — a calm place for the things that matter.\n\n` +
+      `Vault with you, a calm place for the things that matter.\n\n` +
       `Create or sign in to your free account to view what they’ve shared:\n` +
       `${process.env.NEXT_PUBLIC_APP_URL ?? "https://vault.gaiaapp.net"}/signup\n\n` +
       `With care,\nThe Gaia Vault team`,
