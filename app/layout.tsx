@@ -5,7 +5,7 @@ import "./globals.css";
 // Serif display face — warm, soft, a little editorial. Carries the Gaia voice.
 const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "460", "500", "600"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-fraunces",
   display: "swap",

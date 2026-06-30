@@ -73,7 +73,28 @@ remains. Newest stage at the bottom.
 **Remains**
 
 - Stage 3: Auth + MFA + profiles UI + regions wiring.
-- Stage 4: `lib/crypto` + `/docs/SECURITY.md`; Stages 5–12.
+- Stages 5–12.
 
-> RLS/release tests land alongside the crypto tests once `lib/crypto` exists
-> (Stage 4), so they can exercise the full envelope round-trip.
+---
+
+## Stage 4 — Encryption layer + threat model ✅ (built ahead of Stage 3)
+
+**Built**
+
+- `lib/crypto` — envelope encryption on WebCrypto (portable Node + Deno):
+  AES-256-GCM content encryption, HKDF-SHA-256 per-user key derivation,
+  AES-GCM key wrapping. Two key paths: personal (`dekWrappedUser`) and release
+  escrow (`dekWrappedEscrow`). High-level `sealItem` / `openItemPersonal` /
+  `openItemViaEscrow`.
+- **Tests (`tests/crypto.test.ts`) — 6 passing**: personal round-trip, cross-user
+  rejection, release escrow round-trip, refusal to escrow-open a personal item,
+  GCM tamper detection, per-user key distinctness + raw wrap/unwrap.
+- **`docs/SECURITY.md`** — honest threat model: exactly what the company CAN and
+  CANNOT decrypt and under what conditions; why neither path is zero-knowledge;
+  the production KMS/Vault hardening checklist; the "no automated release" rule.
+- Toolchain verified in-environment: `npm install`, `tsc --noEmit` (strict)
+  **clean**, `vitest` **green**. Next pinned to a non-vulnerable `15.5.19`.
+
+**Remains**
+
+- Stages 3, 5–12.
