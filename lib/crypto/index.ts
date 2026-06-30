@@ -189,6 +189,26 @@ export async function openItemViaEscrow(envelope: EncryptedEnvelope): Promise<st
   return textDecoder.decode(pt);
 }
 
+// ── Living shares (re-encrypt one item for another living user) ─────────────
+/** Encrypt plaintext directly under a specific user's derived key. */
+export async function sealForUser(
+  plaintext: string,
+  userId: string,
+): Promise<{ iv: string; ciphertext: string }> {
+  const key = await deriveUserKey(userId);
+  return aesEncrypt(key, textEncoder.encode(plaintext));
+}
+
+/** Decrypt a living share with the recipient user's own derived key. */
+export async function openForUser(
+  envelope: { iv: string; ciphertext: string },
+  userId: string,
+): Promise<string> {
+  const key = await deriveUserKey(userId);
+  const pt = await aesDecrypt(key, envelope.iv, envelope.ciphertext);
+  return textDecoder.decode(pt);
+}
+
 // ── Recipient grants ────────────────────────────────────────────────────────
 // After release, content is re-encrypted under a key derived from a one-time
 // access token that we email to the recipient. The stored row is NOT sufficient
