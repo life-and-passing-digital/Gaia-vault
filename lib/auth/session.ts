@@ -1,9 +1,16 @@
 import "server-only";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { DEMO_MODE, DEMO_USER } from "@/lib/demo/config";
+
+/** A minimal user shape both real Supabase and demo mode satisfy. */
+export type SessionUser = { id: string; email?: string };
+
+const demoUser = (): SessionUser => ({ id: DEMO_USER.id, email: DEMO_USER.email });
 
 /** The authenticated user, or null. Verified against the auth server. */
-export async function getUser() {
+export async function getUser(): Promise<SessionUser | null> {
+  if (DEMO_MODE) return demoUser();
   const sb = await createSupabaseServerClient();
   const {
     data: { user },
@@ -25,6 +32,9 @@ export async function requireUser() {
  */
 export async function requireAdmin() {
   const user = await requireUser();
+  // In demo mode the demo user is treated as an admin so the review console is
+  // reachable. Real deployments always check the admin_users table below.
+  if (DEMO_MODE) return user;
   const sb = await createSupabaseServerClient();
   const { data, error } = await sb
     .from("admin_users")

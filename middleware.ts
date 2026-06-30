@@ -14,6 +14,12 @@ const PROTECTED_PREFIXES = ["/dashboard", "/vault", "/people", "/account", "/adm
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
 
+  // Demo mode has no Supabase auth: let every route through. Pages resolve the
+  // demo session via requireUser().
+  if (process.env.NEXT_PUBLIC_DEMO_MODE === "true") {
+    return response;
+  }
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 

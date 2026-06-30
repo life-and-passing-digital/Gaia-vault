@@ -8,8 +8,13 @@
 
 import type { AdapterFactory, DatabaseAdapter } from "./adapter";
 import { createSupabaseAdapter } from "./supabase";
+import { DEMO_MODE } from "@/lib/demo/config";
 
-const activeFactory: AdapterFactory = createSupabaseAdapter;
+// In demo mode the entire backend is the in-memory adapter (no Supabase). This
+// swap is the whole point of the lib/db boundary.
+const activeFactory: AdapterFactory = DEMO_MODE
+  ? () => import("./demo").then((m) => m.createDemoAdapter())
+  : createSupabaseAdapter;
 
 /** User-scoped database (RLS enforced). Default for all user-facing code. */
 export function getDb(): Promise<DatabaseAdapter> {

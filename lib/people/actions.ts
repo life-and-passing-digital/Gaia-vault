@@ -8,6 +8,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { createSupabaseServiceClient } from "@/lib/supabase/admin";
 import { getEmailProvider } from "@/lib/email";
 import { isReleaseTier } from "@/lib/vault/tiers";
+import { DEMO_MODE } from "@/lib/demo/config";
 
 async function vaultId(userId: string): Promise<string> {
   const db = await getDb();
@@ -52,6 +53,7 @@ export async function removeNominee(id: string): Promise<void> {
 }
 
 export async function addFuneralDirector(formData: FormData): Promise<{ error?: string }> {
+  if (DEMO_MODE) return {};
   const user = await requireUser();
   const businessName = String(formData.get("businessName") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
@@ -72,6 +74,7 @@ export async function addFuneralDirector(formData: FormData): Promise<{ error?: 
 
 /** Invite a partner to co-view designated items while you're alive. */
 export async function invitePartner(formData: FormData): Promise<{ error?: string }> {
+  if (DEMO_MODE) return {};
   const user = await requireUser();
   const email = String(formData.get("partnerEmail") ?? "").trim().toLowerCase();
   if (!email) return { error: "Enter your partner’s email." };
@@ -114,6 +117,7 @@ export async function shareItemWithPartner(
   itemId: string,
   partnerId: string,
 ): Promise<{ error?: string }> {
+  if (DEMO_MODE) return {};
   const user = await requireUser();
   const db = await getDb();
   const item = await db.getItem(itemId);

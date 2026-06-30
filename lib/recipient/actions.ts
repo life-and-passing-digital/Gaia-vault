@@ -1,6 +1,7 @@
 import "server-only";
 import { createSupabaseServiceClient } from "@/lib/supabase/admin";
 import { hashToken, openForRecipient } from "@/lib/crypto";
+import { DEMO_MODE } from "@/lib/demo/config";
 import type { ReleaseTier } from "@/lib/vault/tiers";
 
 export type GrantView =
@@ -21,6 +22,16 @@ export type GrantView =
  */
 export async function getGrantedContent(token: string): Promise<GrantView> {
   if (!token) return { ok: false, reason: "not_found" };
+  if (DEMO_MODE) {
+    // Show a representative released item without touching any backend.
+    return {
+      ok: true,
+      title: "My funeral preferences",
+      body: "A simple service among the gum trees. Native flowers, no black.",
+      tier: "funeral_wishes",
+      expiresAt: new Date(Date.now() + 14 * 86_400_000).toISOString(),
+    };
+  }
   const sb = createSupabaseServiceClient();
   const tokenHash = await hashToken(token);
 

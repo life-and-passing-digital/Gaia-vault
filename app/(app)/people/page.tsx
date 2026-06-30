@@ -2,6 +2,7 @@ import { PeopleManager } from "@/components/people/PeopleManager";
 import { requireUser } from "@/lib/auth/session";
 import { getDb } from "@/lib/db";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { DEMO_MODE } from "@/lib/demo/config";
 
 export const metadata = { title: "People" };
 
@@ -12,10 +13,16 @@ export default async function PeoplePage() {
   const nominees = vault ? await db.listNominees(vault.id) : [];
   const directors = vault ? await db.listFuneralDirectors(vault.id) : [];
 
-  const sb = await createSupabaseServerClient();
-  const { data: invites } = await sb
-    .from("living_access_invites")
-    .select("partner_email,status");
+  let invites: { partner_email: string; status: string }[] | null = [
+    { partner_email: "tom@example.com", status: "accepted" },
+  ];
+  if (!DEMO_MODE) {
+    const sb = await createSupabaseServerClient();
+    const { data } = await sb
+      .from("living_access_invites")
+      .select("partner_email,status");
+    invites = data;
+  }
 
   return (
     <div className="max-w-3xl space-y-6">

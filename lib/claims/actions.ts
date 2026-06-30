@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { createSupabaseServiceClient } from "@/lib/supabase/admin";
 import { getEmailProvider } from "@/lib/email";
+import { DEMO_MODE } from "@/lib/demo/config";
 
 const ClaimSchema = z.object({
   deceasedName: z.string().min(1),
@@ -39,6 +40,7 @@ async function uploadDoc(
  * queue. See /docs/SECURITY.md.
  */
 export async function submitClaim(formData: FormData): Promise<ClaimResult> {
+  if (DEMO_MODE) return { ok: true, ref: "demo-claim-ref-0001" };
   const parsed = ClaimSchema.safeParse({
     deceasedName: formData.get("deceasedName"),
     deceasedEmail: formData.get("deceasedEmail"),

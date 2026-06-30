@@ -5,6 +5,7 @@ import { requireUser } from "@/lib/auth/session";
 import { getDb } from "@/lib/db";
 import { createSupabaseServiceClient } from "@/lib/supabase/admin";
 import { getStripe, ANNUAL_PRICE_ID } from "@/lib/stripe";
+import { DEMO_MODE } from "@/lib/demo/config";
 
 const appUrl = () => process.env.NEXT_PUBLIC_APP_URL ?? "https://vault.gaiaapp.net";
 
@@ -28,6 +29,7 @@ async function ensureCustomer(userId: string, email: string): Promise<string> {
 
 /** Start a Stripe Checkout for the annual plan. Redirects to Stripe. */
 export async function startCheckout(): Promise<void> {
+  if (DEMO_MODE) redirect("/account/billing?status=demo");
   const user = await requireUser();
   const customerId = await ensureCustomer(user.id, user.email ?? "");
   const stripe = getStripe();
@@ -46,6 +48,7 @@ export async function startCheckout(): Promise<void> {
 
 /** Open the Stripe customer portal (manage / cancel / change payment). */
 export async function openPortal(): Promise<void> {
+  if (DEMO_MODE) redirect("/account/billing?status=demo");
   const user = await requireUser();
   const customerId = await ensureCustomer(user.id, user.email ?? "");
   const stripe = getStripe();

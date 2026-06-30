@@ -6,6 +6,7 @@ import { createSupabaseServiceClient } from "@/lib/supabase/admin";
 import { getEmailProvider } from "@/lib/email";
 import { createSupabaseReleasePort } from "@/lib/release/supabasePort";
 import { executeRelease } from "@/lib/release/execute";
+import { DEMO_MODE } from "@/lib/demo/config";
 
 async function auditAdmin(
   sb: ReturnType<typeof createSupabaseServiceClient>,
@@ -26,6 +27,7 @@ async function auditAdmin(
 
 /** Move a claim into review and (optionally) match it to a deceased profile. */
 export async function startReview(claimId: string): Promise<void> {
+  if (DEMO_MODE) return;
   const admin = await requireAdmin();
   const sb = createSupabaseServiceClient();
   // Best-effort match the deceased by email to their profile.
@@ -62,6 +64,7 @@ export async function saveCorroboration(
   claimId: string,
   corroboration: Record<string, unknown>,
 ): Promise<void> {
+  if (DEMO_MODE) return;
   const admin = await requireAdmin();
   const sb = createSupabaseServiceClient();
   await sb.from("death_claims").update({ corroboration }).eq("id", claimId);
@@ -71,6 +74,7 @@ export async function saveCorroboration(
 
 /** Confirm proof of legal authority — unlocks estate-tier release. */
 export async function confirmAuthority(claimId: string, note: string): Promise<void> {
+  if (DEMO_MODE) return;
   const admin = await requireAdmin();
   if (!note.trim()) throw new Error("A note describing the authority is required.");
   const sb = createSupabaseServiceClient();
@@ -83,6 +87,7 @@ export async function confirmAuthority(claimId: string, note: string): Promise<v
 }
 
 export async function rejectClaim(claimId: string, note: string): Promise<void> {
+  if (DEMO_MODE) return;
   const admin = await requireAdmin();
   if (!note.trim()) throw new Error("A reason is required to reject a claim.");
   const sb = createSupabaseServiceClient();
@@ -106,6 +111,7 @@ export async function approveAndRelease(
   claimId: string,
   note: string,
 ): Promise<ApproveResult> {
+  if (DEMO_MODE) return { ok: true, released: 2, grants: 2 };
   const admin = await requireAdmin();
   if (!note.trim()) return { ok: false, error: "Approval notes are required." };
   const sb = createSupabaseServiceClient();
@@ -141,6 +147,7 @@ export async function approveAndRelease(
 
 /** A short-lived signed URL for viewing an uploaded claim document. */
 export async function signClaimDocument(path: string): Promise<string | null> {
+  if (DEMO_MODE) return null;
   await requireAdmin();
   const sb = createSupabaseServiceClient();
   const { data } = await sb.storage.from("claim-documents").createSignedUrl(path, 300);

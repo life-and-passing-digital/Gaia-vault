@@ -4,6 +4,7 @@ import { requireUser } from "@/lib/auth/session";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getDb } from "@/lib/db";
 import { REGIONS } from "@/lib/regions/config";
+import { DEMO_MODE } from "@/lib/demo/config";
 
 export const metadata = { title: "Account" };
 
@@ -11,9 +12,12 @@ export default async function AccountPage() {
   const user = await requireUser();
   const db = await getDb();
   const profile = await db.getProfile(user.id);
-  const sb = await createSupabaseServerClient();
-  const { data: factors } = await sb.auth.mfa.listFactors();
-  const hasMfa = Boolean(factors?.totp?.length);
+  let hasMfa = false;
+  if (!DEMO_MODE) {
+    const sb = await createSupabaseServerClient();
+    const { data: factors } = await sb.auth.mfa.listFactors();
+    hasMfa = Boolean(factors?.totp?.length);
+  }
   const region = profile ? REGIONS[profile.region] : undefined;
 
   return (
@@ -40,7 +44,13 @@ export default async function AccountPage() {
           Add a one-time code from an authenticator app for extra protection.
           Optional, and you can turn it off any time.
         </CardDescription>
-        <MfaSetup alreadyEnrolled={hasMfa} />
+        {DEMO_MODE ? (
+          <p className="rounded-2xl bg-canvas-200 px-4 py-3 text-sm text-ink-500">
+            Two-step verification isn’t available in the demo.
+          </p>
+        ) : (
+          <MfaSetup alreadyEnrolled={hasMfa} />
+        )}
       </Card>
 
       <Card>

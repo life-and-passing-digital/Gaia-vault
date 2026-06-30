@@ -50,6 +50,21 @@ After adding variables, **redeploy** (env changes don't apply to existing
 builds). Then run the database migrations against your Supabase project
 (`supabase db push`) so the schema, RLS and triggers exist.
 
+## Demo mode (no Supabase required)
+
+Want a fully clickable preview with **no backend at all** — for sales, design
+review, or a Vercel preview without secrets? Set one variable:
+
+```
+NEXT_PUBLIC_DEMO_MODE=true
+```
+
+With this on, the app uses an in-memory backend (the `lib/db` adapter swap),
+signs you in as a demo user, and seeds realistic sample data. Visit `/login` and
+click **Enter the demo**. A persistent banner makes clear nothing is stored and
+it resets on restart. Leave it unset (or `false`) for real deployments. Don't
+set both demo mode and real Supabase in the same production project.
+
 ## Quick checklist
 
 1. Create the Supabase project (region `ap-southeast-2` for AU residency).

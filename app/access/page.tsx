@@ -6,6 +6,9 @@ import { getGrantedContent } from "@/lib/recipient/actions";
 
 export const metadata = { title: "Shared with you", robots: { index: false } };
 
+// Per-request: the token comes from the URL and is validated live.
+export const dynamic = "force-dynamic";
+
 const REASONS: Record<string, string> = {
   not_found: "This link isn’t valid. Please check the link from your email.",
   expired: "This secure link has expired. If you need access again, please reply to the email you received.",
