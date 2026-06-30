@@ -1,0 +1,17 @@
+# Supabase local config. RESIDENCY: the hosted project for v1 is created in
+# region ap-southeast-2 (Sydney, AU). See /docs/DATA-RESIDENCY.md.
+project_id = "gaia-vault"
+
+[db]
+major_version = 15
+
+[auth]
+# MFA is offered to users (see lib/auth). Email confirmations on.
+enable_confirmations = true
+
+[auth.mfa]
+# TOTP enrolment available; surfaced in account settings.
+max_enrolled_factors = 5
+
+[storage]
+enabled = true

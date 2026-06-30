@@ -34,8 +34,46 @@ remains. Newest stage at the bottom.
 
 **Remains**
 
-- Stage 2: Supabase schema, migrations, RLS on every table, `lib/db` adapter.
 - Stages 3–12 as per the master spec.
 
 > Note: dependency install / `next build` not run in this environment; code is
 > written to compile under the pinned versions. Run `bash scripts/setup.sh`.
+
+---
+
+## Stage 2 — Supabase schema, migrations, RLS, lib/db adapter ✅
+
+**Built**
+
+- SQL migrations (`supabase/migrations`):
+  - `0001_foundation` — extensions, enums (region, plan, section, **release_tier**,
+    claim_status…), and SECURITY DEFINER helpers (`current_uid`, `is_admin`).
+  - `0002_core_tables` — `profiles`, `vaults`, `vault_sections`, `vault_items`
+    (envelope columns: `ciphertext`, `dek_wrapped_user`, `dek_wrapped_escrow`
+    with a CHECK that **personal items are never escrowed and release items
+    always are**), `nominees`, `funeral_directors`, `item_recipients`,
+    `posthumous_messages`, and GATED `credentials` (scaffold only).
+  - `0003_claims_releases_audit` — `death_claims` (with manual `corroboration`
+    JSON + `authority_confirmed`), append-only `release_events` and `audit_log`,
+    `append_audit()`, and the signup trigger that provisions profile + vault +
+    seeded sections.
+  - `0004_rls_policies` — **RLS enabled on every table**. Owner-only access to
+    the vault; **no recipient SELECT** (release is out-of-band); admins reach
+    claims only via the review workflow; `credentials` has **no INSERT policy**
+    (gated); `release_events`/`audit_log` have **no UPDATE/DELETE** (append-only).
+  - `0005_storage` — private `claim-documents` (admin-read only) and
+    `vault-attachments` (owner-prefixed) buckets.
+- **`lib/db` adapter boundary** — storage-agnostic domain types + `DatabaseAdapter`
+  interface; Supabase implementation behind it; `getDb()` (RLS) / `getServiceDb()`
+  (service role) the only entry points. No feature code imports `@supabase/*`.
+- Supabase client factories (`server`, `client`, `admin`) with a `server-only`
+  guard on the service-role client.
+- `lib/regions/config.ts` — residency as config (AU live; UK/EU/US architected).
+
+**Remains**
+
+- Stage 3: Auth + MFA + profiles UI + regions wiring.
+- Stage 4: `lib/crypto` + `/docs/SECURITY.md`; Stages 5–12.
+
+> RLS/release tests land alongside the crypto tests once `lib/crypto` exists
+> (Stage 4), so they can exercise the full envelope round-trip.
