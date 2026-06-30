@@ -98,3 +98,40 @@ remains. Newest stage at the bottom.
 **Remains**
 
 - Stages 3, 5–12.
+
+---
+
+## Stage 3 — Auth, MFA, sessions ✅
+
+**Built**
+
+- `middleware.ts` — refreshes the Supabase session every request and gate-keeps
+  protected routes (`/dashboard`, `/vault`, `/people`, `/account`, `/admin`).
+- `lib/auth` — `getUser` / `requireUser` / `requireAdmin` (admin checked against
+  `admin_users` in the DB, not a client claim) and server actions for
+  sign-in / sign-up / sign-out / **MFA challenge** (TOTP, aal2).
+- Auth UI — warm login / signup / MFA-verify screens; signup captures the
+  **region** (fixed for residency); `/auth/callback` exchanges email codes.
+- `components/account/MfaSetup` — optional TOTP enrolment straight to Supabase
+  from the browser (secret/QR never touch our server).
+
+## Stage 5 — Vault CRUD, sections, tiers, recipients ✅
+
+**Built**
+
+- `lib/vault/sections` — section metadata + onboarding order + completeness score.
+- `lib/vault/actions` — server actions that **wire crypto + db + audit**:
+  `createItem` seals plaintext before storage; `listSectionItems` decrypts via
+  the personal path; reads/writes/deletes are **audited as actions, never
+  payloads**.
+- App shell (`(app)/layout` + `AppNav`), dashboard with the **ProgressRing**
+  peace-of-mind score, vault overview, per-section editor with the
+  **plain-language tier selector** (who gets this, and when), account page with
+  MFA + billing entry.
+- Typecheck **clean** after each stage.
+
+**Remains**
+
+- Stages 6–12 (partner sharing, nominees/director UI, nudges, billing,
+  death-claim + admin + release, recipient experience, marketing/integration,
+  remaining docs).
