@@ -184,8 +184,12 @@ crypto, with KMS hardening notes.
 ### Verification status
 
 - `tsc --noEmit` (strict) **clean**; `vitest` **9/9 green** (crypto + release).
-- Not run in this environment: `next build` and a live Supabase deploy (no
-  project/secrets here). Run `bash scripts/setup.sh` + `supabase db push`.
+- `next build` **succeeds** — all 21 routes compile (static + dynamic),
+  middleware, server actions and client/server boundaries validated.
+- RLS verified by a pgTAP suite (`supabase/tests/rls_test.sql`) — owner-only
+  vault access, gated-credentials insert denied, non-admin can't see claims or
+  release events. Runs via `supabase test db` (needs a live local DB, so not run
+  in this build-only environment — same as the migrations themselves).
 
 ### Known follow-ups before production
 
