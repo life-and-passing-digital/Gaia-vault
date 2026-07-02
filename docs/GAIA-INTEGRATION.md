@@ -12,20 +12,28 @@ family website and, later, Gaia CRM.
 
 ## 2. Add "Gaia Vault" to the Products dropdown on gaiaapp.net
 
-> **Status: done.** The website (`gaia-website-static`) now ships:
+> **Status: done — everything on gaiaapp.net for now.** The website
+> (`gaia-website-static`) now ships:
 >
 > - `vault.html` — a native product page at `https://gaiaapp.net/vault` that
 >   recreates this app's landing page (hero + vault preview card, trust bar,
 >   three steps, partner sharing, Free/Plus pricing, FAQ, final CTA) on the
 >   site's LIFE design system (Taviraj/Poppins, `#1D4641` primary) while
->   keeping the Vault canvas/sage/flame look. All CTAs link out to
->   `vault.gaiaapp.net` (`/signup`, `/security`, `/claim`).
+>   keeping the Vault canvas/sage/flame look.
+> - Because this app is **not yet deployed** at `vault.gaiaapp.net`, the page
+>   deliberately has no links to the subdomain. The `/security` page content
+>   is embedded on-page (`#how-we-keep-it-safe`) and every "Start your vault"
+>   CTA scrolls to an on-page early-access form (`#start-your-vault`) that
+>   posts to the site's existing `requestDemo` Cloud Function (emails
+>   info@gaiaapp.net).
 > - A **Gaia Vault** item in the "For families" mega menu of both header
 >   partials (`partials/header.html`, `partials/primary-dark-header.html`),
 >   linking to `/vault`, plus a sitemap entry.
 >
-> The snippet below is kept for reference if the menu item should ever link
-> straight to the app instead of the product page.
+> **When this app deploys**, either point the page's `#start-your-vault` CTAs
+> at the live signup, or serve the app itself from a gaiaapp.net path — the
+> business preference is one URL (gaiaapp.net), not a subdomain. The snippet
+> below is kept for reference.
 
 Drop this item into the existing Products menu (adjust markup to your component
 system — the copy and destination are what matter):
