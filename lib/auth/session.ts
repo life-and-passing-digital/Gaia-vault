@@ -11,6 +11,11 @@ const demoUser = (): SessionUser => ({ id: DEMO_USER.id, email: DEMO_USER.email 
 /** The authenticated user, or null. Verified against the auth server. */
 export async function getUser(): Promise<SessionUser | null> {
   if (DEMO_MODE) return demoUser();
+  // No Supabase configured → treat as signed out (protected routes redirect to
+  // /login) rather than throwing a server-side exception.
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return null;
+  }
   const sb = await createSupabaseServerClient();
   const {
     data: { user },
