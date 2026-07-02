@@ -12,6 +12,21 @@ family website and, later, Gaia CRM.
 
 ## 2. Add "Gaia Vault" to the Products dropdown on gaiaapp.net
 
+> **Status: done.** The website (`gaia-website-static`) now ships:
+>
+> - `vault.html` — a native product page at `https://gaiaapp.net/vault` that
+>   recreates this app's landing page (hero + vault preview card, trust bar,
+>   three steps, partner sharing, Free/Plus pricing, FAQ, final CTA) on the
+>   site's LIFE design system (Taviraj/Poppins, `#1D4641` primary) while
+>   keeping the Vault canvas/sage/flame look. All CTAs link out to
+>   `vault.gaiaapp.net` (`/signup`, `/security`, `/claim`).
+> - A **Gaia Vault** item in the "For families" mega menu of both header
+>   partials (`partials/header.html`, `partials/primary-dark-header.html`),
+>   linking to `/vault`, plus a sitemap entry.
+>
+> The snippet below is kept for reference if the menu item should ever link
+> straight to the app instead of the product page.
+
 Drop this item into the existing Products menu (adjust markup to your component
 system — the copy and destination are what matter):
 
