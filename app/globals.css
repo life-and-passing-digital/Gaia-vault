@@ -80,34 +80,38 @@
 }
 
 /* ── Base ─────────────────────────────────────────────────────────────────── */
-:root {
-  color-scheme: light;
-}
+/* Element defaults live in @layer base so Tailwind utilities can override them
+ * (unlayered CSS would silently beat every text-* utility on headings). */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
 
-html {
-  -webkit-text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
-}
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
 
-body {
-  background-color: var(--color-canvas-100);
-  color: var(--color-ink-900);
-  font-family: var(--font-sans);
-  font-feature-settings: "cv11", "ss01";
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  body {
+    background-color: var(--color-canvas-100);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
-  font-weight: 460;
-  letter-spacing: -0.01em;
-  line-height: 1.12;
-  color: var(--color-forest-800);
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 460;
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+    color: var(--color-forest-800);
+  }
 }
 
 /* ── Accessibility: visible focus & reduced motion ────────────────────────── */
@@ -126,6 +130,49 @@ h4 {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ── Depth & atmosphere ───────────────────────────────────────────────────── */
+/* Soft radial washes that give the canvas life without competing with content. */
+.bg-hero {
+  background:
+    radial-gradient(1100px 560px at 88% -12%, var(--color-sage-100), transparent 62%),
+    radial-gradient(820px 520px at -8% 32%, var(--color-canvas-200), transparent 58%),
+    radial-gradient(640px 420px at 70% 105%, color-mix(in srgb, var(--color-flame-300) 16%, transparent), transparent 60%),
+    var(--color-canvas-100);
+}
+
+.bg-app {
+  background:
+    radial-gradient(900px 420px at 100% -10%, var(--color-sage-50), transparent 55%),
+    var(--color-canvas-100);
+}
+
+/* ── Motion: gentle rise-in for page content ──────────────────────────────── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-rise {
+  animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.rise-1 { animation-delay: 0.06s; }
+.rise-2 { animation-delay: 0.14s; }
+.rise-3 { animation-delay: 0.22s; }
+.rise-4 { animation-delay: 0.3s; }
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0) rotate(var(--float-rot, 0deg)); }
+  50% { transform: translateY(-8px) rotate(var(--float-rot, 0deg)); }
+}
+.animate-float {
+  animation: float-soft 7s ease-in-out infinite;
 }
 
 /* Visually-hidden utility for screen-reader-only labels. */

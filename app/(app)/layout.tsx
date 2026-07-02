@@ -29,7 +29,7 @@ export default async function AppLayout({
   }
 
   return (
-    <div className="min-h-dvh bg-canvas-100">
+    <div className="bg-app min-h-dvh">
       <DemoBanner />
       <AppNav isAdmin={isAdmin} />
       <div className="mx-auto max-w-6xl px-5 py-8">{children}</div>

@@ -84,7 +84,7 @@ export function PeopleManager({
           </ul>
         )}
 
-        <form action={(fd) => start(() => addNominee(fd).then(() => {}))} className="grid gap-3 sm:grid-cols-2">
+        <form action={(fd) => start(() => addNominee(fd).then(() => {}))} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="Name" htmlFor="n-name" required>
             <Input id="n-name" name="fullName" required />
           </Field>
@@ -133,7 +133,7 @@ export function PeopleManager({
             ))}
           </ul>
         )}
-        <form action={(fd) => start(() => addFuneralDirector(fd).then(() => {}))} className="grid gap-3 sm:grid-cols-2">
+        <form action={(fd) => start(() => addFuneralDirector(fd).then(() => {}))} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="Business name" htmlFor="d-biz" required>
             <Input id="d-biz" name="businessName" required />
           </Field>

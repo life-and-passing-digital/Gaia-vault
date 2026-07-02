@@ -106,8 +106,8 @@ async function buildStore(): Promise<Store> {
       "Practice: Brunswick Family Health. The kids’ records are there too.", 3),
     seedItem("documents", "estate_authority", "Will & solicitor",
       "Will held with Harper & Lowe, Carlton. Executor is my sister, Jess.", 4),
-    seedItem("assets", "estate_authority", "Accounts to wind down",
-      "Everyday account at the credit union; super with AwareSuper; a few subscriptions.", 5),
+    // Assets is deliberately left empty so the dashboard's guided
+    // "next gentle step" journey is visible in the demo.
     seedItem("messages", "personal", "For Jess, when the time comes",
       "Thank you for always picking up the phone. Look after Mum’s garden for me.", 6),
   ]);
