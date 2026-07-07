@@ -13,43 +13,45 @@
  * ───────────────────────────────────────────────────────────────────────── */
 
 @theme {
-  /* ── Forest: deep grounding green, used for primary actions & headings ── */
-  --color-forest-50: #eef3ee;
-  --color-forest-100: #d6e2d7;
-  --color-forest-200: #aec6b0;
-  --color-forest-300: #82a586;
-  --color-forest-400: #5c8462;
-  --color-forest-500: #3f6a46;
-  --color-forest-600: #2f5236;
-  --color-forest-700: #264430;
-  --color-forest-800: #1f3729;
-  --color-forest-900: #172a20;
+  /* ── Forest: LIFE primary dark (#1D4641) anchors the scale at 700.
+     Headings, CTAs and nav links per the Gaia LIFE design system. ── */
+  --color-forest-50: #eaf1ef;
+  --color-forest-100: #d3e2de;
+  --color-forest-200: #a9c6bf;
+  --color-forest-300: #7fa99f;
+  --color-forest-400: #578c80;
+  --color-forest-500: #356b62;
+  --color-forest-600: #26564f;
+  --color-forest-700: #1d4641;
+  --color-forest-800: #16362f;
+  --color-forest-900: #0f2722;
 
-  /* ── Sage: soft, living green for surfaces, badges, calm accents ── */
-  --color-sage-50: #f4f7f2;
-  --color-sage-100: #e7efe3;
-  --color-sage-200: #d2e0cc;
-  --color-sage-300: #b3c9ab;
-  --color-sage-400: #8fae86;
-  --color-sage-500: #6f9166;
-  --color-sage-600: #57754f;
-  --color-sage-700: #455d40;
-  --color-sage-800: #394b35;
-  --color-sage-900: #2f3e2d;
+  /* ── Sage: LIFE light green (#D4E9CA) anchors the scale at 200.
+     Backgrounds, card borders, badges. ── */
+  --color-sage-50: #f2f8ee;
+  --color-sage-100: #e4f0dc;
+  --color-sage-200: #d4e9ca;
+  --color-sage-300: #b7d5a6;
+  --color-sage-400: #97bc82;
+  --color-sage-500: #789f64;
+  --color-sage-600: #5e814e;
+  --color-sage-700: #4a653e;
+  --color-sage-800: #3c5133;
+  --color-sage-900: #31422b;
 
-  /* ── Canvas: warm creams & stone, the breathing-room background ── */
-  --color-canvas-50: #fdfcf9;
-  --color-canvas-100: #fbf9f4;
-  --color-canvas-200: #f6f2e9;
-  --color-canvas-300: #ede7d8;
-  --color-canvas-400: #ddd4be;
+  /* ── Canvas: LIFE neutrals — hero gray (#F3F7FA) & off-white (#F1F4F4) ── */
+  --color-canvas-50: #ffffff;
+  --color-canvas-100: #f3f7fa;
+  --color-canvas-200: #f1f4f4;
+  --color-canvas-300: #e2e9ed;
+  --color-canvas-400: #c9d4db;
 
-  /* ── Ink: warm near-blacks & greys for text ── */
-  --color-ink-900: #23241f;
-  --color-ink-700: #3c3d36;
-  --color-ink-500: #5b5c53;
-  --color-ink-400: #7a7b70;
-  --color-ink-300: #9b9c90;
+  /* ── Ink: LIFE dark purple (#180026) body text, muted purple (#463351) ── */
+  --color-ink-900: #180026;
+  --color-ink-700: #463351;
+  --color-ink-500: #5f4f6d;
+  --color-ink-400: #7d7089;
+  --color-ink-300: #a098aa;
 
   /* ── Flame: the warm accent from the Gaia leaf-and-flame motif ── */
   --color-flame-300: #eaba8f;
@@ -63,20 +65,20 @@
   --color-danger: #a8463a;
   --color-info: #3f6a8e;
 
-  /* ── Typography ── */
-  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+  /* ── Typography: LIFE pairing — Taviraj headings, Poppins body/UI ── */
+  --font-display: var(--font-taviraj), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  /* ── Radii: soft, rounded, never sharp ── */
-  --radius-card: 1.25rem;
+  /* ── Radii: LIFE tokens — br-medium (16px) cards, pills stay pills ── */
+  --radius-card: 1rem;
   --radius-pill: 9999px;
 
-  /* ── Shadows: gentle, low-contrast, like soft daylight ── */
-  --shadow-soft: 0 1px 2px rgba(35, 36, 31, 0.04),
-    0 8px 24px -12px rgba(35, 36, 31, 0.12);
-  --shadow-lift: 0 2px 4px rgba(35, 36, 31, 0.05),
-    0 16px 40px -16px rgba(35, 36, 31, 0.18);
+  /* ── Shadows: gentle, tinted with LIFE dark purple, never flat black ── */
+  --shadow-soft: 0 1px 2px rgba(24, 0, 38, 0.04),
+    0 8px 24px -12px rgba(24, 0, 38, 0.12);
+  --shadow-lift: 0 2px 4px rgba(24, 0, 38, 0.05),
+    0 16px 40px -16px rgba(24, 0, 38, 0.16);
 }
 
 /* ── Base ─────────────────────────────────────────────────────────────────── */
@@ -107,10 +109,10 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 460;
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
     line-height: 1.12;
-    color: var(--color-forest-800);
+    color: var(--color-forest-700);
   }
 }
 

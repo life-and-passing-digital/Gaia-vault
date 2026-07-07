@@ -1,0 +1,34 @@
+# Deploys Gaia Vault to Cloud Run in the Gaia website's Firebase/GCP project,
+# where Firebase Hosting serves it at gaiaapp.net/vault-app via a rewrite.
+#
+# One-time setup (docs/DEPLOY-FIREBASE.md): enable the Cloud Run, Cloud Build
+# and Artifact Registry APIs on project gaia-website-bcc7c, create a deploy
+# service account, and add its JSON key as the GCP_SA_KEY repo secret.
+# Trigger manually from the Actions tab.
+
+name: Deploy to Cloud Run
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy
+        run: |
+          gcloud run deploy gaia-vault \
+            --source . \
+            --project gaia-website-bcc7c \
+            --region australia-southeast1 \
+            --allow-unauthenticated \
+            --min-instances 0 \
+            --max-instances 3 \
+            --memory 512Mi

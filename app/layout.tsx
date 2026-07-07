@@ -1,20 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Taviraj, Poppins } from "next/font/google";
 import "./globals.css";
 
-// Serif display face — warm, soft, a little editorial. Carries the Gaia voice.
-const fraunces = Fraunces({
+// Serif display face from the Gaia LIFE design system — headings only.
+const taviraj = Taviraj({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   style: ["normal", "italic"],
-  variable: "--font-fraunces",
+  variable: "--font-taviraj",
   display: "swap",
 });
 
-// Clean, highly legible sans for body and UI.
-const inter = Inter({
+// LIFE body/UI face — Poppins, never used for headings.
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1f3729",
+  themeColor: "#1D4641",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -44,7 +45,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+    <html lang="en" className={`${taviraj.variable} ${poppins.variable}`}>
       <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );

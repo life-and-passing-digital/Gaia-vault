@@ -1,8 +1,16 @@
 import type { NextConfig } from "next";
 
+// When served behind Firebase Hosting at gaiaapp.net/<basePath>, the app is
+// built with NEXT_PUBLIC_BASE_PATH (e.g. "/vault-app") so every route, asset
+// and link lives under that prefix. Unset (Vercel, local dev) it serves at /.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Self-contained server bundle for the Cloud Run container image.
+  output: "standalone",
+  ...(basePath ? { basePath } : {}),
   // Security headers applied to every response. The vault holds the most
   // sensitive data a person owns, so we lock the browser down hard.
   async headers() {
