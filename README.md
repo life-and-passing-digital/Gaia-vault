@@ -1,5 +1,12 @@
 # Gaia Vault
 
+> **This code has moved.** Gaia Vault now lives in the main website repo at
+> [`gaia-website-static/vault-app/`](https://github.com/life-and-passing-digital/gaia-website-static/tree/main/vault-app)
+> and deploys to Cloud Run in the site's Firebase project (see
+> `vault-app/docs/DEPLOY-FIREBASE.md` there). This repo is kept only so the
+> legacy Vercel deployment (gaia-vault.vercel.app) keeps serving until the
+> Cloud Run cutover; archive it after that.
+
 > Organise what matters, for the people you trust.
 
 Gaia Vault is a production-grade B2C web app in the **Gaia** product family
